@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="2.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title>Гайд: начало работы с Leonardo</dc:title>
+    <dc:language>ru</dc:language>
+    <dc:creator>Compass AI Flow — by Anna</dc:creator>
+    <dc:identifier id="BookId">urn:uuid:Гайд:_начало_работы_с_Leonardo</dc:identifier>
+    <dc:date>2025-08-31</dc:date>
+  </metadata>
+  <manifest>
+    <item id="content" href="content.xhtml" media-type="application/xhtml+xml"/>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="logo" href="images/logo.svg" media-type="image/svg+xml"/>
+  </manifest>
+  <spine toc="ncx"><itemref idref="content"/></spine>
+</package>
