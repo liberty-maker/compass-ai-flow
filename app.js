@@ -8,3 +8,8 @@ if (burger) {
 // bokeh
 const bk = document.createElement('div'); bk.className = 'bokeh'; document.body.appendChild(bk);
 for (let i=0;i<3;i++){ const s=document.createElement('span'); s.style.left=(i*30+10)+"%"; s.style.top=(i*20+10)+"%"; bk.appendChild(s); }
+// ===== Print to PDF handler =====
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.print-btn');
+  if(btn){ window.print(); }
+});
