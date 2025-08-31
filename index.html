@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Compass AI Flow — AI Tools Navigator</title>
+  <link rel="stylesheet" href="assets/styles.css"/>
+</head>
+<body>
+  <!-- header + sidebar -->
+  <div class="header">
+    <div class="header-inner">
+      <button class="burger" aria-label="menu">☰</button>
+      <div class="logo"><img src="assets/logo.svg" alt="Compass AI Flow logo"/></div>
+    </div>
+  </div>
+  <div class="bokeh"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="side-title">Навигация</div>
+    <a class="side-link" href="index.html">🏠 Главная</a>
+    <a class="side-link" href="assistant-store.html">🛍 Assistant Store</a>
+    <a class="side-link" href="learning-hub.html">📚 Learning Hub</a>
+    <a class="side-link" href="content-lab.html">🎨 Content Lab</a>
+  </aside>
+  <div class="overlay"></div>
+
+  <div class="container">
+    <!-- hero -->
+    <div class="hero">
+      <div>
+        <h1>Compass AI Flow</h1>
+        <p>Люксовый нео-минимализм с боке и стеклом: быстрый доступ ко всем нужным AI-инструментам.</p>
+        <div class="badges">
+          <span class="badge">🧭 Навигация</span>
+          <span class="badge">⚡ Быстро</span>
+          <span class="badge">💳 Готово к оплатам</span>
+        </div>
+        <div class="notice small">Apple Pay и PayPal подключим в Assistant Store (Stripe/PayPal).</div>
+      </div>
+      <div class="hero-card">
+        <div class="glow"></div>
+        <div class="small">Обновлено: 2025-08-31</div>
+        <div class="small">Цены примерные — проверяй у провайдера.</div>
+      </div>
+    </div>
+
+    <!-- секции -->
+    <div class="section"><h2>🧠 Тексты и ассистенты</h2>
+      <div class="grid">
+        <div class="card">
+          <img class="logo" src="https://www.google.com/s2/favicons?domain=openai.com&sz=64" alt="ChatGPT"/>
+          <h3>ChatGPT</h3><p>Тексты, анализ, ассистент</p>
+          <div class="meta"><span class="tag">💵 Pro ~$20/mo</span><span class="tag free">🎁 Есть</span></div>
+          <div class="actions"><a class="btn" href="https://chat.openai.com/" target="_blank">Открыть</a>
+            <a class="btn primary" href="https://chat.openai.com/" target="_blank">Перейти →</a></div>
+        </div>
+        <div class="card">
+          <img class="logo" src="https://www.google.com/s2/favicons?domain=claude.ai&sz=64" alt="Claude"/>
+          <h3>Claude</h3><p>Мощный ассистент от Anthropic</p>
+          <div class="meta"><span class="tag">💵 Pro ~$20/mo</span><span class="tag free">🎁 Есть</span></div>
+          <div class="actions"><a class="btn" href="https://claude.ai/" target="_blank">Открыть</a>
+            <a class="btn primary" href="https://claude.ai/" target="_blank">Перейти →</a></div>
+        </div>
+        <div class="card">
+          <img class="logo" src="https://www.google.com/s2/favicons?domain=perplexity.ai&sz=64" alt="Perplexity"/>
+          <h3>Perplexity</h3><p>Поиск с ответами и источниками</p>
+          <div class="meta"><span class="tag">💵 Pro ~$20/mo</span><span class="tag free">🎁 Есть</span></div>
+          <div class="actions"><a class="btn" href="https://www.perplexity.ai/" target="_blank">Открыть</a>
+            <a class="btn primary" href="https://www.perplexity.ai/" target="_blank">Перейти →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section"><h2>🎨 Картинки</h2>
+      <div class="grid">
+        <div class="card">
+          <img class="logo" src="https://www.google.com/s2/favicons?domain=leonardo.ai&sz=64" alt="Leonardo"/>
+          <h3>Leonardo</h3><p>Мощный генератор с темами</p>
+          <div class="meta"><span class="tag">💵 Pro от ~$10</span><span class="tag free">🎁 Есть</span></div>
+          <div class="actions"><a class="btn" href="https://leonardo.ai/" target="_blank">Открыть</a>
+            <a class="btn primary" href="https://leonardo.ai/" target="_blank">Перейти →</a></div>
+        </div>
+        <div class="card">
+          <img class="logo" src="https://www.google.com/s2/favicons?domain=midjourney.com&sz=64" alt="Midjourney"/>
+          <h3>Midjourney</h3><p>Фотореализм, через Discord</p>
+          <div class="meta"><span class="tag">💵 от ~$10</span><span class="tag">🎁 Нет</span></div>
+          <div class="actions"><a class="btn" href="https://www.midjourney.com/" target="_blank">Открыть</a>
+            <a class="btn primary" href="https://www.midjourney.com/" target="_blank">Перейти →</a></div>
+        </div>
+        <div class="card">
+          <img class="logo" src="https://www.google.com/s2/favicons?domain=civitai.com&sz=64" alt="LoRA"/>
+          <h3>LoRA (CivitAI)</h3><p>Библиотека стилей/персонажей</p>
+          <div class="meta"><span class="tag">💵 Бесплатно</span><span class="tag free">🎁 Да</span></div>
+          <div class="actions"><a class="btn" href="https://civitai.com/" target="_blank">Открыть</a>
+            <a class="btn primary" href="https://civitai.com/" target="_blank">Перейти →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">© 2025 Compass AI Flow — by Anna</div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
