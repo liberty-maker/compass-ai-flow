@@ -6,17 +6,38 @@
   <title>🛍 Assistant Store — Compass AI Flow</title>
   <link rel="stylesheet" href="assets/styles.css"/>
   <style>
-    /* Небольшие локальные штрихи */
     .store .card .actions{margin-top:12px}
-    .price{opacity:.9;font-weight:600;margin-left:auto}
+    .cart-btn{position:relative}
+    .cart-badge{
+      position:absolute; right:-6px; top:-6px; min-width:18px; height:18px; padding:0 5px;
+      border-radius:999px; background:#8b5cf6; color:#fff; font-size:12px; display:flex; align-items:center; justify-content:center;
+    }
+    .drawer{position:fixed; inset:0; display:none; z-index:1000}
+    .drawer.open{display:block}
+    .drawer .back{position:absolute; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(4px)}
+    .drawer .panel{
+      position:absolute; right:0; top:0; height:100%; width:min(420px,92vw);
+      background:rgba(19,23,33,.98); border-left:1px solid rgba(255,255,255,.12);
+      box-shadow:-20px 0 60px rgba(0,0,0,.4); display:flex; flex-direction:column;
+    }
+    .drawer .top{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
+    .drawer .body{padding:12px 16px; overflow:auto; display:grid; gap:10px}
+    .drawer .item{display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;
+      padding:10px 12px; border:1px solid rgba(255,255,255,.08); border-radius:12px; background:rgba(255,255,255,.04)}
+    .drawer .item .name{font-weight:600}
+    .drawer .foot{margin-top:auto; padding:12px 16px; border-top:1px solid rgba(255,255,255,.08); display:grid; gap:10px}
+    .drawer .row{display:flex; justify-content:space-between}
+    .btn.wide{width:100%; text-align:center}
   </style>
 </head>
 <body>
-  <!-- Шапка и меню -->
+  <!-- Шапка -->
   <div class="header"><div class="header-inner">
     <button class="burger" aria-label="menu">☰</button>
     <div class="logo"><img src="assets/logo.svg" alt="Compass AI Flow"/></div>
+    <button class="btn cart-btn" id="open-cart">🛒 Корзина <span class="cart-badge" id="cart-badge">0</span></button>
   </div></div>
+
   <div class="bokeh"></div>
   <aside class="sidebar">
     <div class="side-title">Навигация</div>
@@ -30,9 +51,7 @@
   <div class="container store">
     <div class="section">
       <h2>🛍 Assistant Store</h2>
-      <div class="notice small">
-        Ассистенты на базе ChatGPT. Онлайн-оплату подключим позже (Stripe → Apple Pay / Google Pay / PayPal).
-      </div>
+      <div class="notice small">Ассистенты на базе ChatGPT. Оплаты подключим позже (Stripe → Apple Pay / Google Pay / PayPal).</div>
 
       <div class="grid">
         <!-- Ассистент-переводчик -->
@@ -41,13 +60,15 @@
           <h3>Ассистент-переводчик</h3>
           <p>Перевод на нативный английский (UK/US) и украинский: сохраняет стиль, правит лексику и тон.</p>
           <div class="meta">
-            <span class="tag free">🎁 Бесплатно (демо)</span>
             <span class="tag">🌐 ChatGPT</span>
           </div>
           <div class="actions">
-  <button class="btn primary buy-btn"
-    data-title="Ассистент-переводчик" data-price="5.00">Купить — $5</button>
-</div>
+            <button class="btn primary add-to-cart"
+              data-id="translator"
+              data-title="Ассистент-переводчик"
+              data-price="5.00">Добавить в корзину — $5</button>
+          </div>
+        </div>
 
         <!-- Veo 3 – Prompt -->
         <div class="card">
@@ -55,45 +76,34 @@
           <h3>Veo 3 – Prompt</h3>
           <p>Создаёт идеальный промпт для твоих видео в Veo 3. Использует поиск, холст и генерацию изображений.</p>
           <div class="meta">
-            <span class="tag free">🎁 Бесплатно (демо)</span>
             <span class="tag">🌐 ChatGPT</span>
           </div>
           <div class="actions">
-  <button class="btn primary buy-btn"
-    data-title="Veo 3 – Prompt" data-price="12.00">Купить — $12</button>
-</div>
+            <button class="btn primary add-to-cart"
+              data-id="veo3"
+              data-title="Veo 3 – Prompt"
+              data-price="12.00">Добавить в корзину — $12</button>
+          </div>
+        </div>
       </div>
     </div>
-        
 
+    <div class="footer">© 2025 Compass AI Flow — by Anna</div>
+  </div>
 
-        
-
-  <!-- Модальное окно оплаты (демо) -->
-  <div id="pay-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="pay-title">
-    <div class="modal-card">
-      <div class="modal-top">
-        <h3 id="pay-title">Оплата ассистента</h3>
-        <button class="icon-btn close-modal" aria-label="Закрыть">✕</button>
+  <!-- КОРЗИНА (выдвижная панель) -->
+  <div class="drawer" id="cart-drawer" aria-hidden="true">
+    <div class="back"></div>
+    <div class="panel">
+      <div class="top">
+        <strong>Корзина</strong>
+        <button class="icon-btn" id="close-cart">✕</button>
       </div>
-
-      <div class="modal-body">
-        <div class="modal-line"><span class="label">Продукт</span><span id="pay-product">—</span></div>
-        <div class="modal-line"><span class="label">Цена</span><span id="pay-amount">$0</span></div>
-
-        <label class="field">
-          <span>Email (получить доступ):</span>
-          <input id="pay-email" type="email" placeholder="you@email.com" required>
-        </label>
-
-        <div class="pay-methods">
-          <button class="btn wide" disabled> Apple Pay (скоро)</button>
-          <button class="btn wide" disabled>G Pay (скоро)</button>
-          <button class="btn wide" disabled>PayPal (скоро)</button>
-          <button class="btn primary wide" id="pay-demo">Оформить (демо)</button>
-        </div>
-
-        <div class="tiny muted">Демо-режим: оплата не списывается. Интеграция Stripe Checkout будет подключена позже.</div>
+      <div class="body" id="cart-list"><div class="muted">Корзина пуста</div></div>
+      <div class="foot">
+        <div class="row"><span>Итого</span><strong id="cart-total">$0</strong></div>
+        <a class="btn primary wide" href="checkout.html">Перейти к оплате →</a>
+        <button class="btn wide" id="cart-clear">Очистить корзину</button>
       </div>
     </div>
   </div>
@@ -101,73 +111,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-
-/* ===== Modal (payment) ===== */
-.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000}
-.modal.hidden{display:none}
-.modal-card{width:min(520px,92vw);background:rgba(19,23,33,.98);border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.4);padding:16px 16px 18px}
-.modal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.modal-top h3{margin:0}
-.icon-btn{background:transparent;border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:6px 10px;color:#fff}
-.modal-body{display:grid;gap:12px}
-.modal-line{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px}
-.modal-line .label{opacity:.7}
-.field{display:grid;gap:6px}
-.field input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
-  border-radius:10px;padding:10px 12px;color:#fff}
-.pay-methods{display:grid;gap:8px;margin-top:4px}
-.btn.wide{width:100%;text-align:center}
-.tiny{font-size:12px}
-.muted{opacity:.75}
-// ===== Assistant Store: payment modal (demo) =====
-(function(){
-  const modal = document.getElementById('pay-modal');
-  if(!modal) return;
-
-  const productEl = document.getElementById('pay-product');
-  const amountEl  = document.getElementById('pay-amount');
-  const emailEl   = document.getElementById('pay-email');
-  const closeBtn  = modal.querySelector('.close-modal');
-  const demoBtn   = document.getElementById('pay-demo');
-
-  // Открыть модалку по клику "Купить"
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.buy-btn');
-    if(!btn) return;
-    const title = btn.dataset.title || 'Ассистент';
-    const price = btn.dataset.price || '0.00';
-    productEl.textContent = title;
-    amountEl.textContent  = `$${price}`;
-    emailEl.value = '';
-    modal.classList.remove('hidden');
-  });
-
-  // Закрыть
-  closeBtn.addEventListener('click', ()=> modal.classList.add('hidden'));
-  modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.add('hidden'); });
-
-  // Демо-оформление
-  demoBtn.addEventListener('click', ()=>{
-    if(!emailEl.value.trim()){
-      emailEl.focus();
-      emailEl.reportValidity?.();
-      return;
-    }
-    // Имитация успешной оплаты
-    demoBtn.disabled = true;
-    demoBtn.textContent = 'Обрабатываем…';
-    setTimeout(()=>{
-      demoBtn.disabled = false;
-      demoBtn.textContent = 'Оформить (демо)';
-      modal.classList.add('hidden');
-      alert('Готово! На почту придёт доступ к ассистенту (демо).');
-    }, 900);
-  });
-})();
-         <div class="footer">© 2025 Compass AI Flow — by Anna</div>
-  </div>
-
-      
