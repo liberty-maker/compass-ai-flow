@@ -13,8 +13,7 @@ document.addEventListener('click', (e)=>{
   const btn = e.target.closest('.print-btn');
   if(btn){ window.print(); }
 });
-// Подставить сегодняшнюю дату в элементы с [data-today]
+// Авто-дата для элементов с [data-today]
 document.querySelectorAll('[data-today]').forEach(el=>{
-  const d = new Date().toISOString().slice(0,10);
-  el.textContent = d;
+  el.textContent = new Date().toISOString().slice(0,10);
 });
