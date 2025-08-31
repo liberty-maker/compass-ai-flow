@@ -109,3 +109,40 @@ body::after{
 .step .backtop{font-size:12px;color:#c7d2fe}
 figure{margin:10px 0;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.14);padding:10px;border-radius:12px;text-align:center}
 figcaption{font-size:12px;color:var(--muted)}
+/* ===== Luxe PDF cover & print ===== */
+.cover-luxe{
+  position: relative; margin: 14px 0 18px; padding: 28px;
+  border-radius: 20px;
+  background: radial-gradient(120% 100% at 10% 0%, rgba(124,58,237,.32), rgba(6,182,212,.22) 40%, rgba(255,255,255,.06) 70%);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 18px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.cover-luxe .brand{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.cover-luxe .brand img{width:120px;height:auto}
+.cover-luxe .suptitle{letter-spacing:.12em;text-transform:uppercase;font-size:12px;color:#c7d2fe;opacity:.9}
+.cover-luxe h1{margin:6px 0 6px;font-size:36px}
+.cover-luxe .meta{color:#b6c2d9;font-size:13px}
+.cover-luxe .ribbon{
+  position:absolute; right:18px; top:18px; padding:8px 12px; border-radius:999px;
+  background:linear-gradient(135deg, rgba(14,165,233,.18), rgba(139,92,246,.18));
+  border:1px solid rgba(139,92,246,.35); font-size:12px;
+}
+.print-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.print-btn{
+  padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(135deg, rgba(14,165,233,.12), rgba(139,92,246,.12));
+  cursor:pointer; user-select:none;
+}
+
+/* печать */
+@page { size: A4; margin: 16mm; }
+@media print{
+  body{ background:#fff; color:#000 }
+  .header,.sidebar,.overlay,.bokeh,.footer,.print-actions{ display:none !important; }
+  .container{ padding:0; max-width:100% }
+  .cover-luxe{ page-break-after: always; border:0; box-shadow:none; background:#fff }
+  .cover-luxe .brand img{ width:160px }
+  .cover-luxe h1{ color:#000 }
+  .step{ break-inside: avoid; border-color:#0002; background:#fff }
+  a[href]:after{ content:" (" attr(href) ")"; font-size:10px; color:#555 }
+}
